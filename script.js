@@ -127,3 +127,70 @@ const data = [
     ]
   }
 ];
+// --- Persistencia y utilidades ---
+const STORAGE_KEY = "admin_malla_state_v1";
+const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+const cursoElements = new Map();
+
+function render() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+
+  data.forEach((nivel) => {
+    const col = document.createElement("section");
+    const title = document.createElement("h2");
+    title.textContent = `Ciclo ${nivel.ciclo}`;
+    col.appendChild(title);
+
+    nivel.cursos.forEach((c) => {
+      const div = document.createElement("div");
+      div.className = "curso";
+      div.dataset.state = "locked";
+      div.dataset.nombre = c.nombre;
+      div.innerHTML = `<h3>${c.nombre}</h3>${
+        c.req.length ? `<small>Req: ${c.req.join(", ")}</small>` : ""
+      }`;
+      div.addEventListener("click", () => toggleCurso(c.nombre));
+      col.appendChild(div);
+
+      cursoElements.set(c.nombre, { el: div, req: c.req });
+    });
+
+    grid.appendChild(col);
+  });
+
+  updateStates();
+}
+
+function toggleCurso(nombre) {
+  const obj = cursoElements.get(nombre);
+  if (!obj) return;
+
+  const state = obj.el.dataset.state;
+  if (state !== "unlocked" && state !== "completed") return;
+
+  saved[nombre] = !saved[nombre];
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+  updateStates();
+}
+
+function updateStates() {
+  cursoElements.forEach(({ el, req }, nombre) => {
+    const completed = !!saved[nombre];
+    const unlocked = req.every((r) => !!saved[r]);
+
+    el.dataset.state = completed
+      ? "completed"
+      : unlocked
+      ? "unlocked"
+      : "locked";
+  });
+}
+
+function resetMalla() {
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+document.addEventListener("DOMContentLoaded", render);
+
