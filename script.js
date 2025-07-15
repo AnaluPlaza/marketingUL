@@ -1,196 +1,205 @@
-const data = [
-  {
-    ciclo: "Ciclo 1",
-    cursos: [
-      { nombre: "Globalización y Realidad Nacional" },
-      { nombre: "Lenguaje y Comunicación I" },
-      { nombre: "Metodologías de Investigación" },
-      { nombre: "Desarrollo Personal y Social" },
-      { nombre: "Matemática Básica" },
-      { nombre: "Ética Cívica" }
-    ]
-  },
-  {
-    ciclo: "Ciclo 2",
-    cursos: [
-      { nombre: "Economía y Empresa" },
-      { nombre: "Lenguaje y Comunicación II", requisitos: ["Lenguaje y Comunicación I"] },
-      { nombre: "Procesos Sociales y Políticos" },
-      { nombre: "Temas de Filosofía" },
-      { nombre: "Estadística Básica para los Negocios", requisitos: ["Matemática Básica"] },
-      { nombre: "Matemática Aplicada a los Negocios", requisitos: ["Matemática Básica"] }
-    ]
-  },
-  {
-    ciclo: "Ciclo 3",
-    cursos: [
-      { nombre: "Estadística Empresarial I", requisitos: ["Estadística Básica para los Negocios"] },
-      { nombre: "Contabilidad General", requisitos: ["Matemática Aplicada a los Negocios"] },
-      { nombre: "Antropología del Consumidor", electivo: true },
-      { nombre: "Introducción a las Finanzas", requisitos: ["Matemática Aplicada a los Negocios"] },
-      { nombre: "Matemática para la Gestión de Negocios", requisitos: ["Matemática Aplicada a los Negocios"] },
-      { nombre: "Herramientas Informáticas para la Gestión I", requisitos: ["Economía y Empresa"] }
-    ]
-  },
-  {
-    ciclo: "Ciclo 4",
-    cursos: [
-      { nombre: "Costos y Presupuestos", requisitos: ["Contabilidad General"] },
-      { nombre: "Sociología del Consumidor", requisitos: ["Antropología del Consumidor"] },
-      { nombre: "Procesos de Marketing", requisitos: ["Antropología del Consumidor"] },
-      { nombre: "Estadística Empresarial II", requisitos: ["Estadística Empresarial I"] },
-      { nombre: "Administración Empresarial y Marketing", requisitos: ["Economía y Empresa"] },
-      { nombre: "Microeconomía / Microeconomics", requisitos: ["Economía y Empresa"] },
-      { nombre: "Herramientas Informáticas para la Gestión II", requisitos: ["Herramientas Informáticas para la Gestión I"], electivo: true }
-    ]
-  },
-  {
-    ciclo: "Ciclo 5",
-    cursos: [
-      { nombre: "Estadística Aplicada al Marketing", requisitos: ["Estadística Empresarial II"] },
-      { nombre: "Consumidor y Experiencia del Cliente / Customer Experience", requisitos: ["Sociología del Consumidor"] },
-      { nombre: "Elaboración de Estados Financieros", requisitos: ["Costos y Presupuestos", "Introducción a las Finanzas"] },
-      { nombre: "Administración de Canales de Distribución", requisitos: ["Procesos de Marketing"] },
-      { nombre: "Gestión de Producto y Marca", requisitos: ["Procesos de Marketing"] },
-      { nombre: "Macroeconomía / Macroeconomics", requisitos: ["Microeconomía / Microeconomics"] }
-    ]
-  },
-  {
-    ciclo: "Ciclo 6",
-    cursos: [
-      { nombre: "Política y Fijación de Precios", requisitos: ["Macroeconomía / Macroeconomics"] },
-      { nombre: "Operaciones Logísticas de Marketing", requisitos: ["Administración de Canales de Distribución"] },
-      { nombre: "Investigación Cuantitativa de Mercados", requisitos: ["Estadística Aplicada al Marketing"] },
-      { nombre: "Publicidad y Medios", requisitos: ["Gestión de Producto y Marca"] },
-      { nombre: "Branding", requisitos: ["Gestión de Producto y Marca"] },
-      { nombre: "Investigación Cualitativa de Mercados", requisitos: ["Consumidor y Experiencia del Cliente / Customer Experience"] },
-      { nombre: "Ciencia de Datos Aplicado al Marketing", requisitos: ["Estadística Aplicada al Marketing"] }
-    ]
-  },
-  {
-    ciclo: "Ciclo 7",
-    cursos: [
-      { nombre: "Dirección Estratégica de Marketing", requisitos: ["Investigación Cuantitativa de Mercados"] },
-      { nombre: "Finanzas para Marketing", requisitos: ["Elaboración de Estados Financieros"] },
-      { nombre: "Marketing Social", requisitos: ["Investigación Cuantitativa de Mercados"] },
-      { nombre: "Comunicación e Imagen Corporativa", requisitos: ["Publicidad y Medios"] },
-      { nombre: "Transformación Digital y Marketing", requisitos: ["Publicidad y Medios"] },
-      { nombre: "Endomarketing y Gestión de Personas", requisitos: ["Administración Empresarial y Marketing"] },
-      { nombre: "Neuromarketing", requisitos: ["Investigación Cuantitativa de Mercados"], electivo: true },
-      { nombre: "Promoción y Marketing BTL", requisitos: ["Política y Fijación de Precios"], electivo: true },
-      { nombre: "Diseño de la Propuesta de Valor", requisitos: ["Gestión de Producto y Marca"], electivo: true },
-      { nombre: "Métricas de Marketing", requisitos: ["Política y Fijación de Precios"], electivo: true },
-      { nombre: "Metodologías Ágiles en Marketing", requisitos: ["Herramientas Informáticas para la Gestión I"], electivo: true }
-    ]
-  },
-  {
-    ciclo: "Ciclo 8",
-    cursos: [
-      { nombre: "Gerencia de Ventas", requisitos: ["Operaciones Logísticas de Marketing"] },
-      { nombre: "Ética y Sostenibilidad Empresarial", requisitos: ["Endomarketing y Gestión de Personas"] },
-      { nombre: "Herramientas Estratégicas de Negocios y Marketing", requisitos: ["Dirección Estratégica de Marketing"] },
-      { nombre: "Métodos y Técnicas de Evaluación de Proyectos", requisitos: ["Finanzas para Marketing"] },
-      { nombre: "E-Commerce", requisitos: ["Transformación Digital y Marketing"] },
-      { nombre: "Inteligencia Comercial", requisitos: ["Dirección Estratégica de Marketing"], electivo: true },
-      { nombre: "Taller de Investigación de Mercados", requisitos: ["Investigación Cuantitativa de Mercados"], electivo: true },
-      { nombre: "Marketing Mobile", requisitos: ["Transformación Digital y Marketing"], electivo: true },
-      { nombre: "Simulación de Decisiones de Marketing", requisitos: ["Dirección Estratégica de Marketing"], electivo: true },
-      { nombre: "Gerencia de Marketing Deportivo", requisitos: ["Marketing Social"], electivo: true }
-    ]
-  },
-  {
-    ciclo: "Ciclo 9",
-    cursos: [
-      { nombre: "Trade Marketing y Merchandising", requisitos: ["Gerencia de Ventas"] },
-      { nombre: "Marketing de Servicios", requisitos: ["Marketing Social"] },
-      { nombre: "Seminario de Investigación en Marketing I", requisitos: ["Herramientas Estratégicas de Negocios y Marketing"] },
-      { nombre: "Analítica de Datos", requisitos: ["Transformación Digital y Marketing"] },
-      { nombre: "Negociación Comercial", requisitos: ["Comunicación e Imagen Corporativa"] },
-      { nombre: "Marketing Personal", requisitos: ["Marketing Social"], electivo: true },
-      { nombre: "Taller de Inbound Marketing", requisitos: ["Transformación Digital y Marketing"], electivo: true },
-      { nombre: "Marketing de Retailers", requisitos: ["Herramientas Estratégicas de Negocios y Marketing"], electivo: true },
-      { nombre: "Marketing y Ventas B2B", requisitos: ["Branding"], electivo: true },
-      { nombre: "Emprendimientos de Marketing 5.0", requisitos: ["E-Commerce"], electivo: true }
-    ]
-  },
-  {
-    ciclo: "Ciclo 10",
-    cursos: [
-      { nombre: "Seminario de Investigación en Marketing II", requisitos: ["Seminario de Investigación en Marketing I"] },
-      { nombre: "Estrategias de Marketing Internacional", requisitos: ["Trade Marketing y Merchandising"] },
-      { nombre: "Estrategia de Relacionamiento y Fidelización", requisitos: ["Herramientas Estratégicas de Negocios y Marketing"] },
-      { nombre: "Plan de Marketing", requisitos: ["Métodos y Técnicas de Evaluación de Proyectos"] },
-      { nombre: "Planeamiento Estratégico Publicitario", requisitos: ["Publicidad y Medios"] },
-      { nombre: "Marketing de Centros Comerciales e Hipermercados", requisitos: ["Gerencia de Ventas"], electivo: true },
-      { nombre: "Marketing en la Base de la Pirámide", requisitos: ["Métodos y Técnicas de Evaluación de Proyectos"], electivo: true },
-      { nombre: "Patrocinio de Marcas y Sponsoring", requisitos: ["Marketing de Servicios"], electivo: true }
-    ]
+const data = {
+  1: [
+    { nombre: "Globalización y Realidad Nacional" },
+    { nombre: "Lenguaje y Comunicación I" },
+    { nombre: "Metodologías de Investigación" },
+    { nombre: "Desarrollo Personal y Social" },
+    { nombre: "Matemática Básica" },
+    { nombre: "Ética Cívica" },
+  ],
+  2: [
+    { nombre: "Economía y Empresa" },
+    { nombre: "Lenguaje y Comunicación II", requisitos: ["Lenguaje y Comunicación I"] },
+    { nombre: "Procesos Sociales y Políticos" },
+    { nombre: "Temas de Filosofía" },
+    { nombre: "Estadística Básica para los Negocios", requisitos: ["Matemática Básica"] },
+    { nombre: "Matemática Aplicada a los Negocios", requisitos: ["Matemática Básica"] },
+  ],
+  3: [
+    { nombre: "Estadística Empresarial I", requisitos: ["Estadística Básica para los Negocios"] },
+    { nombre: "Contabilidad General", requisitos: ["Matemática Aplicada a los Negocios"] },
+    { nombre: "Antropología del Consumidor", electivo: true },
+    { nombre: "Introducción a las Finanzas", requisitos: ["Matemática Aplicada a los Negocios"] },
+    { nombre: "Matemática para la Gestión de Negocios", requisitos: ["Matemática Aplicada a los Negocios"] },
+    { nombre: "Herramientas Informáticas para la Gestión I", requisitos: ["Economía y Empresa"] },
+  ],
+  4: [
+    { nombre: "Costos y Presupuestos", requisitos: ["Contabilidad General"] },
+    { nombre: "Sociología del Consumidor", requisitos: ["Antropología del Consumidor"] },
+    { nombre: "Procesos de Marketing", requisitos: ["Antropología del Consumidor"] },
+    { nombre: "Estadística Empresarial II", requisitos: ["Estadística Empresarial I"] },
+    { nombre: "Administración Empresarial y Marketing", requisitos: ["Economía y Empresa"] },
+    { nombre: "Microeconomía / Microeconomics", requisitos: ["Economía y Empresa"] },
+    { nombre: "Herramientas Informáticas para la Gestión II", requisitos: ["Herramientas Informáticas para la Gestión I"], electivo: true },
+  ],
+  5: [
+    { nombre: "Estadística Aplicada al Marketing", requisitos: ["Estadística Empresarial II"] },
+    { nombre: "Consumidor y Experiencia del Cliente / Customer Experience", requisitos: ["Sociología del Consumidor"] },
+    { nombre: "Elaboración de Estados Financieros", requisitos: ["Costos y Presupuestos", "Introducción a las Finanzas"] },
+    { nombre: "Administración de Canales de Distribución", requisitos: ["Procesos de Marketing"] },
+    { nombre: "Gestión de Producto y Marca", requisitos: ["Procesos de Marketing"] },
+    { nombre: "Macroeconomía / Macroeconomics", requisitos: ["Microeconomía / Microeconomics"] },
+  ],
+  6: [
+    { nombre: "Política y Fijación de Precios", requisitos: ["Macroeconomía / Macroeconomics"] },
+    { nombre: "Operaciones Logísticas de Marketing", requisitos: ["Administración de Canales de Distribución"] },
+    { nombre: "Investigación Cuantitativa de Mercados", requisitos: ["Estadística Aplicada al Marketing"] },
+    { nombre: "Publicidad y Medios", requisitos: ["Gestión de Producto y Marca"] },
+    { nombre: "Branding", requisitos: ["Gestión de Producto y Marca"] },
+    { nombre: "Investigación Cualitativa de Mercados", requisitos: ["Consumidor y Experiencia del Cliente / Customer Experience"] },
+    { nombre: "Ciencia de Datos Aplicado al Marketing", requisitos: ["Estadística Aplicada al Marketing"] },
+  ],
+  7: [
+    { nombre: "Dirección Estratégica de Marketing", requisitos: ["Investigación Cuantitativa de Mercados"] },
+    { nombre: "Finanzas para Marketing", requisitos: ["Elaboración de Estados Financieros"] },
+    { nombre: "Marketing Social", requisitos: ["Investigación Cuantitativa de Mercados"] },
+    { nombre: "Comunicación e Imagen Corporativa", requisitos: ["Publicidad y Medios"] },
+    { nombre: "Transformación Digital y Marketing", requisitos: ["Publicidad y Medios"] },
+    { nombre: "Endomarketing y Gestión de Personas", requisitos: ["Administración Empresarial y Marketing"] },
+    { nombre: "Neuromarketing", requisitos: ["Investigación Cuantitativa de Mercados"], electivo: true },
+    { nombre: "Promoción y Marketing BTL", requisitos: ["Política y Fijación de Precios"], electivo: true },
+    { nombre: "Diseño de la Propuesta de Valor", requisitos: ["Gestión de Producto y Marca"], electivo: true },
+    { nombre: "Métricas de Marketing", requisitos: ["Política y Fijación de Precios"], electivo: true },
+    { nombre: "Metodologías Ágiles en Marketing", requisitos: ["Herramientas Informáticas para la Gestión I"], electivo: true },
+  ],
+  8: [
+    { nombre: "Gerencia de Ventas", requisitos: ["Operaciones Logísticas de Marketing"] },
+    { nombre: "Ética y Sostenibilidad Empresarial", requisitos: ["Endomarketing y Gestión de Personas"] },
+    { nombre: "Herramientas Estratégicas de Negocios y Marketing", requisitos: ["Dirección Estratégica de Marketing"] },
+    { nombre: "Métodos y Técnicas de Evaluación de Proyectos", requisitos: ["Finanzas para Marketing"] },
+    { nombre: "E-Commerce", requisitos: ["Transformación Digital y Marketing"] },
+    { nombre: "Inteligencia Comercial", requisitos: ["Dirección Estratégica de Marketing"], electivo: true },
+    { nombre: "Taller de Investigación de Mercados", requisitos: ["Investigación Cuantitativa de Mercados"], electivo: true },
+    { nombre: "Marketing Mobile", requisitos: ["Transformación Digital y Marketing"], electivo: true },
+    { nombre: "Simulación de Decisiones de Marketing", requisitos: ["Dirección Estratégica de Marketing"], electivo: true },
+    { nombre: "Gerencia de Marketing Deportivo", requisitos: ["Marketing Social"], electivo: true },
+  ],
+  9: [
+    { nombre: "Trade Marketing y Merchandising", requisitos: ["Gerencia de Ventas"] },
+    { nombre: "Marketing de Servicios", requisitos: ["Marketing Social"] },
+    { nombre: "Seminario de Investigación en Marketing I", requisitos: ["Herramientas Estratégicas de Negocios y Marketing"] },
+    { nombre: "Analítica de Datos", requisitos: ["Transformación Digital y Marketing"] },
+    { nombre: "Negociación Comercial", requisitos: ["Comunicación e Imagen Corporativa"] },
+    { nombre: "Marketing Personal", requisitos: ["Marketing Social"], electivo: true },
+    { nombre: "Taller de Inbound Marketing", requisitos: ["Transformación Digital y Marketing"], electivo: true },
+    { nombre: "Marketing de Retailers", requisitos: ["Herramientas Estratégicas de Negocios y Marketing"], electivo: true },
+    { nombre: "Marketing y Ventas B2B", requisitos: ["Branding"], electivo: true },
+    { nombre: "Emprendimientos de Marketing 5.0", requisitos: ["E-Commerce"], electivo: true },
+  ],
+  10: [
+    { nombre: "Seminario de Investigación en Marketing II", requisitos: ["Seminario de Investigación en Marketing I"] },
+    { nombre: "Estrategias de Marketing Internacional", requisitos: ["Trade Marketing y Merchandising"] },
+    { nombre: "Estrategia de Relacionamiento y Fidelización", requisitos: ["Herramientas Estratégicas de Negocios y Marketing"] },
+    { nombre: "Plan de Marketing", requisitos: ["Métodos y Técnicas de Evaluación de Proyectos"] },
+    { nombre: "Planeamiento Estratégico Publicitario", requisitos: ["Publicidad y Medios"] },
+    { nombre: "Marketing de Centros Comerciales e Hipermercados", requisitos: ["Gerencia de Ventas"], electivo: true },
+    { nombre: "Marketing en la Base de la Pirámide", requisitos: ["Métodos y Técnicas de Evaluación de Proyectos"], electivo: true },
+    { nombre: "Patrocinio de Marcas y Sponsoring", requisitos: ["Marketing de Servicios"], electivo: true },
+  ]
+};
+
+const grid = document.getElementById("grid");
+
+function guardarProgreso() {
+  localStorage.setItem("progresoMarketing", JSON.stringify(data));
+}
+
+function cargarProgreso() {
+  const progreso = localStorage.getItem("progresoMarketing");
+  if (progreso) {
+    const parsed = JSON.parse(progreso);
+    for (const ciclo in parsed) {
+      parsed[ciclo].forEach((curso, i) => {
+        data[ciclo][i].estado = curso.estado;
+      });
+    }
   }
-];
-// --- Persistencia y utilidades ---
-const STORAGE_KEY = "admin_malla_state_v1";
-const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-const cursoElements = new Map();
+}
+
+function crearCurso(curso) {
+  const div = document.createElement("div");
+  div.className = "curso";
+  div.dataset.state = curso.estado || "locked";
+  div.innerHTML = `<h3>${curso.nombre}</h3>`;
+
+  if (curso.requisitos) {
+    const req = document.createElement("small");
+    req.textContent = `Requiere: ${curso.requisitos.join(", ")}`;
+    div.appendChild(req);
+  }
+
+  div.addEventListener("click", () => {
+    if (div.dataset.state === "unlocked") {
+      div.dataset.state = "completed";
+      curso.estado = "completed";
+      actualizarDesbloqueos();
+      guardarProgreso();
+    } else if (div.dataset.state === "completed") {
+      div.dataset.state = "unlocked";
+      curso.estado = "unlocked";
+      actualizarDesbloqueos();
+      guardarProgreso();
+    }
+  });
+
+  curso.element = div;
+  return div;
+}
+
+function actualizarDesbloqueos() {
+  const completados = new Set();
+  for (const ciclo in data) {
+    data[ciclo].forEach((curso) => {
+      if (curso.estado === "completed") {
+        completados.add(curso.nombre);
+      }
+    });
+  }
+
+  for (const ciclo in data) {
+    data[ciclo].forEach((curso) => {
+      if (curso.estado === "completed") return;
+
+      if (!curso.requisitos || curso.requisitos.every((req) => completados.has(req))) {
+        curso.estado = "unlocked";
+        curso.element.dataset.state = "unlocked";
+      } else {
+        curso.estado = "locked";
+        curso.element.dataset.state = "locked";
+      }
+    });
+  }
+}
+
+function reiniciar() {
+  for (const ciclo in data) {
+    data[ciclo].forEach((curso) => {
+      curso.estado = "locked";
+      curso.element.dataset.state = "locked";
+    });
+  }
+  actualizarDesbloqueos();
+  guardarProgreso();
+}
 
 function render() {
-  const grid = document.getElementById("grid");
   grid.innerHTML = "";
+  for (const ciclo in data) {
+    const columna = document.createElement("section");
+    const titulo = document.createElement("h2");
+    titulo.textContent = `Ciclo ${ciclo}`;
+    columna.appendChild(titulo);
 
-  data.forEach((nivel) => {
-    const col = document.createElement("section");
-    const title = document.createElement("h2");
-    title.textContent = `Ciclo ${nivel.ciclo}`;
-    col.appendChild(title);
-
-    nivel.cursos.forEach((c) => {
-      const div = document.createElement("div");
-      div.className = "curso";
-      div.dataset.state = "locked";
-      div.dataset.nombre = c.nombre;
-      div.innerHTML = `<h3>${c.nombre}</h3>${
-        c.req.length ? `<small>Req: ${c.req.join(", ")}</small>` : ""
-      }`;
-      div.addEventListener("click", () => toggleCurso(c.nombre));
-      col.appendChild(div);
-
-      cursoElements.set(c.nombre, { el: div, req: c.req });
+    data[ciclo].forEach((curso) => {
+      const div = crearCurso(curso);
+      columna.appendChild(div);
     });
 
-    grid.appendChild(col);
-  });
+    grid.appendChild(columna);
+  }
 
-  updateStates();
+  actualizarDesbloqueos();
 }
 
-function toggleCurso(nombre) {
-  const obj = cursoElements.get(nombre);
-  if (!obj) return;
-
-  const state = obj.el.dataset.state;
-  if (state !== "unlocked" && state !== "completed") return;
-
-  saved[nombre] = !saved[nombre];
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
-  updateStates();
-}
-
-function updateStates() {
-  cursoElements.forEach(({ el, req }, nombre) => {
-    const completed = !!saved[nombre];
-    const unlocked = req.every((r) => !!saved[r]);
-
-    el.dataset.state = completed
-      ? "completed"
-      : unlocked
-      ? "unlocked"
-      : "locked";
-  });
-}
-
-function resetMalla() {
-  localStorage.removeItem(STORAGE_KEY);
-  location.reload();
-}
-
-document.addEventListener("DOMContentLoaded", render);
-
+cargarProgreso();
+render();
